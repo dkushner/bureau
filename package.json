@@ -1,9 +1,9 @@
 {
-  "name": "bureau",
+  "name": "vue-bureau",
   "version": "1.0.0",
   "description": "Form management plugin for Vue and Vuex.",
   "main": "dist/index.js",
-  "types": "types/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest --config=jest.config.js --notify",
     "format": "prettier --write src/**/*.ts src/**/*.js",
