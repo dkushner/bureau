@@ -1,8 +1,8 @@
-import Vue, { VueConstructor, VNode, PluginFunction } from 'vue'
-import BureauForm from './components/BureauForm';
+import Vue, { PluginFunction, VNode, VueConstructor } from 'vue'
 import { Store } from 'vuex'
-import { error } from './utilities/logging';
-import { bureauModule, RootState } from './state';
+import BureauForm from './components/BureauForm'
+import { bureauModule, RootState } from './state'
+import { error } from './utilities/logging'
 
 declare global {
   interface Window {
@@ -20,8 +20,8 @@ declare global {
   export const __BUREAU_VERSION__: string
 
   namespace JSX {
-    interface Element extends VNode { }
-    interface ElementClass extends Vue { }
+    type Element = VNode
+    type ElementClass = Vue
     interface IntrinsicElements {
       [elem: string]: any
     }
@@ -56,7 +56,7 @@ declare module 'vue/types/vue' {
 }
 
 const Bureau: Bureau = {
-  install (Vue: VueConstructor, args?: BureauPluginOptions): void { 
+  install (vue: VueConstructor, args?: BureauPluginOptions): void { 
     const options = { 
       store: undefined,
       ...args 
@@ -67,16 +67,15 @@ const Bureau: Bureau = {
       return
     }
 
-    Vue.component('BureauForm', BureauForm)
+    vue.component('BureauForm', BureauForm)
 
-    console.log(Boolean(options.store.state['bureau']))
     options.store.registerModule('bureau', bureauModule, {
-      preserveState: Boolean(options.store.state['bureau'])
+      preserveState: Boolean(options.store.state.bureau)
     })
 
-    Vue.prototype.$bureau = {
+    vue.prototype.$bureau = {
       version: __BUREAU_VERSION__
-    } as BureauObject
+    }
   },
   version: __BUREAU_VERSION__
 }

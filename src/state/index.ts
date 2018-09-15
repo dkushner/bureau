@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
-import { mutations } from './mutations'
 import { getters } from './getters'
+import { mutations } from './mutations'
 
 export interface RootState {
   [key: string]: any
@@ -45,11 +45,11 @@ export const state: BureauState = {
   version: __BUREAU_VERSION__
 }
 
-const namespaced: boolean = true
+const namespaced = true
 
 export const bureauModule: Module<BureauState, RootState> = {
-  namespaced,
-  state,
+  getters,
   mutations,
-  getters
+  namespaced,
+  state
 }

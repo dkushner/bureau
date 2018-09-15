@@ -7,9 +7,9 @@
 function createMessage (message: string, vm?: any, parent?: any): string | void {
   if (parent) {
     vm = {
-      _isVue: true,
+      $options: vm,
       $parent: parent,
-      $options: vm
+      _isVue: true
     }
   }
 
@@ -82,6 +82,7 @@ function formatComponentName (vm: any, includeFile?: boolean): string {
  * Generates a component descendency trace for a target VM instance.
  * @param vm Component instance to trace
  */
+/* tslint:disable */
 function componentTrace (vm: any): string {
   if (vm._isVue && vm.$parent) {
     const tree = []
@@ -105,8 +106,7 @@ function componentTrace (vm: any): string {
       vm = vm.$parent
     }
 
-    return '\n\nfound in\n\n' + tree
-      .map((vm, i) => `${
+    return '\n\nfound in\n\n' + tree.map((vm, i) => `${
         i === 0 ? '---> ' : ' '.repeat(5 + i * 2)
       }${
         Array.isArray(vm)
@@ -117,4 +117,5 @@ function componentTrace (vm: any): string {
   } else {
     return `\n\n(found in ${formatComponentName(vm)})`
   }
+  /* tslint:enable */
 }

@@ -1,5 +1,5 @@
 import { GetterTree } from 'vuex'
-import { BureauState, RootFormState, FieldState, RootState } from './index'
+import { BureauState, FieldState, RootFormState, RootState } from './index'
 
 export const getters: GetterTree<BureauState, RootState> = {
   getRegisteredForms (state): Record<string, RootFormState> {

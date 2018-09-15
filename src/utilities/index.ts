@@ -82,8 +82,7 @@ export const getIn = (state: any, compound: string) => {
   const path = _.toPath(compound)
 
   let current = state
-  for (let i = 0; i < path.length; i++) {
-    const key = path[i]
+  for (const key of path) {
     const arrayInvalid = (_.isArray(current) && !_.isNumber(key))
     if (current === undefined || current === null || !_.isObject(current) || arrayInvalid) {
       return undefined

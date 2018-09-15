@@ -1,9 +1,9 @@
-import { MutationTree } from 'vuex'
-import { BureauState, RootFormState, FormState } from './index'
 import * as _ from 'lodash'
+import { MutationTree } from 'vuex'
 import { getIn, setIn } from '../utilities'
+import { BureauState, FormState, RootFormState } from './index'
 
-export type FormPayload = { formName: string }
+export interface FormPayload { formName: string }
 export type FieldPayload = FormPayload & { fieldName: string }
 
 export type ChangePayload = FieldPayload & { value: any }
@@ -28,13 +28,13 @@ export const mutations: MutationTree<BureauState> = {
     resultFields = setIn(resultFields, `${fieldName}.dirty`, dirty)
 
     // Now that field is updated, check form status.
-    const sanity = fieldNames.reduce((result: Record<string, any>, name) => {
-      const dirty = _.isEqual(getIn(formState.values, name), getIn(formState.initials, name))
+    const sanity = fieldNames.reduce((result: Record<string, any>, name: string): any => {
+      const fieldDirty = _.isEqual(getIn(formState.values, name), getIn(formState.initials, name))
       const recentDirty = _.isEqual(getIn(formState.values, name), getIn(formState.lastSubmitted, name)) || undefined
 
-      result.dirty = result.dirty || dirty
+      result.dirty = result.dirty || fieldDirty
       result.recentDirty = result.recentDirty || recentDirty
-      result.pristine = !!result.pristine && !dirty
+      result.pristine = !!result.pristine && !fieldDirty
 
       return result
     }, { })
@@ -46,14 +46,14 @@ export const mutations: MutationTree<BureauState> = {
     const { fields, form }: RootFormState = getIn(state, `forms.${formName}`) || {
       fields: { },
       form: {
-        recentDirty: false,
         errors: { },
         initials: values && { ...values },
         invalid: false,
         pristine: true,
-        submitting: false,
+        recentDirty: false,
         submitFailed: false,
         submitSucceeded: false,
+        submitting: false,
         valid: true,
         validating: 0,
         values: values ? { ...values } : { }

@@ -1,5 +1,5 @@
-import BureauForm from './BureauForm'
 import { FieldState } from '../../state';
+import BureauForm from './BureauForm'
 
 export interface FormProxy {
   registerField (fieldName: string, validators: any[]): void

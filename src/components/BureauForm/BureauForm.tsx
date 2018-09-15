@@ -1,5 +1,5 @@
-import { Component, Vue, Prop, Provide } from 'vue-property-decorator'
-import { VNode, CreateElement } from 'vue'
+import { CreateElement, VNode } from 'vue'
+import { Component, Prop, Provide, Vue } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { FormProxy } from './index'
 
@@ -12,8 +12,8 @@ export default class BureauForm extends Vue {
   @Prop({ type: String, required: true }) name!: string
   @Prop([Array, Function]) validate!: []
   @Prop(Function) onSubmit!: () => void
-  @Prop(Boolean) eagerDestroy: boolean = false
-  @Prop(Boolean) keepDirty: boolean = false
+  @Prop(Boolean) eagerDestroy = false
+  @Prop(Boolean) keepDirty = false
   @Prop(Object) initialValues!: { [key: string]: any }
 
   @Bureau.Getter getRegisteredForms!: any
@@ -30,6 +30,21 @@ export default class BureauForm extends Vue {
 
   @Provide()
   form: FormProxy = {
+    blur: (fieldName: string) => {
+      this.blur({ formName: this.name, fieldName })
+    },
+    change: (fieldName: string, value: any) => {
+      this.change({ formName: this.name, fieldName, value })
+    },
+    focus: (fieldName: string) => {
+      this.focus({ formName: this.name, fieldName })
+    },
+    getFieldState: (fieldName: string) => {
+      return this.getFormField(this.name, fieldName)
+    },
+    getValue: (fieldName: string) => {
+      return this.getFormValues(this.name)[fieldName]
+    },
     registerField: (fieldName, validators) => {
       this.registerField({ formName: this.name, fieldName })
 
@@ -40,25 +55,10 @@ export default class BureauForm extends Vue {
     unregisterField: (fieldName: string) => {
       delete this.validators[fieldName]
       this.unregisterField({ 
-        formName: this.name, 
-        fieldName, 
-        destroy: this.eagerDestroy 
+        destroy: this.eagerDestroy,
+        fieldName,
+        formName: this.name
       })
-    },
-    change: (fieldName: string, value: any) => {
-      this.change({ formName: this.name, fieldName, value })
-    },
-    focus: (fieldName: string) => {
-      this.focus({ formName: this.name, fieldName })
-    },
-    blur: (fieldName: string) => {
-      this.blur({ formName: this.name, fieldName })
-    },
-    getFieldState: (fieldName: string) => {
-      return this.getFormField(this.name, fieldName)
-    },
-    getValue: (fieldName: string) => {
-      return this.getFormValues(this.name)[fieldName]
     }
   }
 
@@ -71,8 +71,8 @@ export default class BureauForm extends Vue {
   created () {
     this.initialize({
       formName: this.name,
-      values: this.initialValues,
-      keepDirty: this.keepDirty
+      keepDirty: this.keepDirty,
+      values: this.initialValues
     })
   }
 

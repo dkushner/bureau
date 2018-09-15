@@ -75,7 +75,7 @@ export default class BureauField extends Vue {
 
     const scoped = this.$scopedSlots.default ? 
       this.$scopedSlots.default(scopedProps) :
-      <input type='text'
+      <input type="text"
               name={ this.name }
               v-on={ scopedProps.listeners } />
 
