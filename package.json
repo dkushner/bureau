@@ -2,13 +2,18 @@
   "name": "bureau",
   "version": "1.0.0",
   "description": "Form management plugin for Vue and Vuex.",
-  "main": "dist/bureau.js",
+  "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
     "test": "jest --config=jest.config.js --notify",
     "format": "prettier --write src/**/*.ts src/**/*.js",
     "lint": "tslint -c .tslint.js -p tsconfig.json",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run formta && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
