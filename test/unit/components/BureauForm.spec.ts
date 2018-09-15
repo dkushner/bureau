@@ -6,7 +6,7 @@ import { mockStore, Overrides } from '../../index'
 
 describe('BureauForm', () => {
   
-  test('should call provided submit handler', () => {
+  test('calls provided submit handler on submit', () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
 
@@ -29,7 +29,7 @@ describe('BureauForm', () => {
     expect(propsData.onSubmit).toBeCalled()
   })
 
-  test('should register form state on creation', () => {
+  test('registers form state on creation', () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
 
@@ -50,9 +50,10 @@ describe('BureauForm', () => {
     })
 
     expect(mutations.initialize).toBeCalled()
+    expect(store.state).toHaveProperty('bureau.forms')
   })
 
-  test('should render as expected', () => {
+  test('renders as expected', () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
 

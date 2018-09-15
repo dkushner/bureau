@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BureauForm should render as expected 1`] = `
+exports[`BureauForm renders as expected 1`] = `
 
 <form>
 </form>

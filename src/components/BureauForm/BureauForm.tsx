@@ -5,7 +5,9 @@ import { FormProxy } from './index'
 
 const Bureau = namespace('bureau')
 
-@Component
+@Component({
+  name: 'bureau-form'
+})
 export default class BureauForm extends Vue {
   @Prop({ type: String, required: true }) name!: string
   @Prop([Array, Function]) validate!: []

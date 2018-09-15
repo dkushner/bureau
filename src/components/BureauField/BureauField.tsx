@@ -2,7 +2,9 @@ import { Component, Vue, Prop, Inject, Watch } from "vue-property-decorator";
 import { FormProxy } from '../BureauForm'
 import { CreateElement, VNode } from "vue";
 
-@Component
+@Component({
+  name: 'bureau-field'
+})
 export default class BureauField extends Vue {
   @Prop({ type: String, required: true }) name!: string
   @Prop([Array, Function]) validate!: []
@@ -63,18 +65,20 @@ export default class BureauField extends Vue {
   }
 
   render (h: CreateElement): VNode {
-    const bindings = {
-      props: {
-        field: {
-          value: this.value
-        },
-        listeners: this.inputListeners,
-        form: this.form
-      }
+    const scopedProps = {
+      field: {
+        value: this.value
+      },
+      listeners: this.inputListeners,
+      form: this.form
     }
-    
-    return (
-      <slot { ...bindings }></slot>
-    )
+
+    const scoped = this.$scopedSlots.default ? 
+      this.$scopedSlots.default(scopedProps) :
+      <input type='text'
+              name={ this.name }
+              v-on={ scopedProps.listeners } />
+
+    return scoped
   }
 }
