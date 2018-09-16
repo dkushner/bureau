@@ -32,15 +32,15 @@ jobs:
     - zip -jr "release/bureau-${TRAVIS_TAG}.zip" release/*
     deploy:
     - provider: npm
-      email: root@davidkushner.me
-      api_key: "$NPM_API_KEY"
-      tag: beta
+      email: "root@davidkushner.me"
+      api_key: $NPM_API_KEY
+      tag: ${TRAVIS_TAG}
       skip_cleanup: true
       on:
         repo: dkushner/bureau
         tags: true
     - provider: releases
-      api_key: "$GITHUB_API_KEY"
+      api_key: $GITHUB_API_KEY
       file: release/bureau-${TRAVIS_TAG}.zip
       skip_cleanup: true
       on:
