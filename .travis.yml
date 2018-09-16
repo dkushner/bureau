@@ -28,7 +28,7 @@ jobs:
     - yarn run test:coverage && codecov
     - yarn run build
     - rm -rf release && mkdir -p release
-    - for file in ./_bundles/*; do cp "$file" "${file/dist\/bureau/release/bureau-${TRAVIS_TAG}}"
+    - for file in ./_bundles/*; do cp "$file" "${file/lib\/bureau/release/bureau-${TRAVIS_TAG}}"
     - zip -jr "release/bureau-${TRAVIS_TAG}.zip" release/*
     deploy:
     - provider: npm
