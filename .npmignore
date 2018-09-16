@@ -1,5 +1,7 @@
+.*
 src
-tsconfig.json
-.tslint.js
-.prettierrc
-jest.config.js
+test
+node_modules
+**/webpack.config.js
+**/tsconfig.json
+**/jest.config.js
