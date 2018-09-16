@@ -1,7 +1,7 @@
-import isNumber from 'lodash.isnumber'
 import isArray from 'lodash.isarray'
-import toPath from 'lodash.topath'
+import isNumber from 'lodash.isnumber'
 import isObject from 'lodash.isobject'
+import toPath from 'lodash.topath'
 
 const recursiveSetIn = (state: any | undefined, index: number, path: string[], value: any): any => {
   // Base case where recursion has reached limit.
