@@ -1,0 +1,54 @@
+language: node_js
+node_js: '8'
+
+cache:
+  yarn: true
+
+install:
+- yarn --frozen-lockfile --non-interactive
+
+stages:
+- name: test
+  if: (tag IS blank) OR (type != push) OR (repo != dkushner/bureau)
+- name: deploy
+  if: (tag IS present) AND (type = push) AND (repo = dkushner/bureau)
+
+jobs:
+  include:
+  - stage: test
+    before_script:
+    - npm i codecov -g
+    script:
+    - yarn run lint
+    - yarn run test:coverage -i
+    after_script:
+    - codecov
+  - stage: build
+    script: yarn run build
+  - stage: deploy
+    before_script:
+    - npm i codecov -g
+    script:
+    - yarn run lint
+    - yarn run test:coverage -i && codecov
+    - yarn run build
+    - rm -rf release
+    - mkdir -p release
+    - for file in ./dist/*; do cp "$file" "${file/dist\/bureau/release/bureau-${TRAVIS_TAG}}"
+    - zip -jr "release/bureau-${TRAVIS_TAG}.zip" release/*
+    deploy:
+    - provider: npm
+      email: "root@davidkushner.me"
+      api_key: $NPM_API_KEY
+      tag: $(node ./build/parse-npm-tag.js ${TRAVIS_TAG})
+      skip_cleanup: true
+      on:
+        repo: dkushner/bureau
+        tags: true
+    - provider: github
+      api_key: $GITHUB_API_KEY
+      file: "release/bureau-${TRAVIS_TAG}.zip"
+      skip_cleanup: true
+      on:
+        repo: dkushner/bureau
+        tags: true
