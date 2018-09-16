@@ -1,8 +1,9 @@
 const webpack = require('webpack')
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-module.exports = {
+const config = {
   entry: {
     'bureau': './src/index.ts',
     'bureau.min': './src/index.ts'
@@ -35,3 +36,11 @@ module.exports = {
     }]
   }
 }
+
+config.plugins = config.plugins || [] 
+
+if (process.env.ANALYZE) {
+  config.plugins.push(new BundleAnalyzerPlugin())
+}
+
+module.exports = config
