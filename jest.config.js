@@ -15,6 +15,7 @@ module.exports = {
   transform: {
     '.+\\.(ts|tsx)$': 'ts-jest'
   },
+  coverageDirectory: './coverage',
   collectCoverageFrom: [
     'src/**/*.{js,ts,tsx}'
   ],
