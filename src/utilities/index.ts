@@ -1,4 +1,3 @@
-import isArray from 'lodash.isarray'
 import isNumber from 'lodash.isnumber'
 import isObject from 'lodash.isobject'
 import toPath from 'lodash.topath'
@@ -17,7 +16,7 @@ const recursiveSetIn = (state: any | undefined, index: number, path: string[], v
       return result === undefined ? undefined : { [key]: result }
     }
 
-    if (isArray(state)) {
+    if (Array.isArray(state)) {
       throw new Error('Cannot set non-numeric property on array.')
     }
 
@@ -57,7 +56,7 @@ const recursiveSetIn = (state: any | undefined, index: number, path: string[], v
     return array
   }
 
-  if (!isArray(state)) {
+  if (!Array.isArray(state)) {
     throw new Error('Cannot set a numeric property on an object.')
   }
 
@@ -86,7 +85,7 @@ export const getIn = (state: any, compound: string) => {
 
   let current = state
   for (const key of path) {
-    const arrayInvalid = isArray(current) && !isNumber(key)
+    const arrayInvalid = Array.isArray(current) && !isNumber(key)
     if (current === undefined || current === null || !isObject(current) || arrayInvalid) {
       return undefined
     }
