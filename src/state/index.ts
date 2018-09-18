@@ -37,12 +37,10 @@ export interface RootFormState {
 
 export interface BureauState {
   forms: Record<string, RootFormState>
-  version: string
 }
 
 export const state: BureauState = {
-  forms: {},
-  version: __BUREAU_VERSION__,
+  forms: {}
 }
 
 const namespaced = true

@@ -17,8 +17,6 @@ declare global {
     getElementsByClassName(classNames: string): NodeListOf<HTMLElement>
   }
 
-  export const __BUREAU_VERSION__: string
-
   namespace JSX {
     type Element = VNode
     type ElementClass = Vue
@@ -30,16 +28,13 @@ declare global {
 
 export interface BureauPlugin {
   install: PluginFunction<BureauPluginOptions>
-  version: string
 }
 
 export interface BureauPluginOptions {
   store: Store<RootState>
 }
 
-export interface BureauObject extends Vue { 
-  version: string
-}
+export interface BureauObject extends Vue { }
 
 declare module 'vue/types/vue' {
   export interface Vue {
@@ -73,10 +68,7 @@ export const Bureau: BureauPlugin = {
       preserveState: Boolean(options.store.state.bureau)
     })
 
-    vue.prototype.$bureau = {
-      version: __BUREAU_VERSION__
-    }
-  },
-  version: __BUREAU_VERSION__
+    vue.prototype.$bureau = { }
+  }
 }
 
