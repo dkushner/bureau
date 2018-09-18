@@ -80,4 +80,3 @@ export const Bureau: BureauPlugin = {
   version: __BUREAU_VERSION__
 }
 
-export default Bureau
