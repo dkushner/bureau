@@ -1,4 +1,4 @@
-import Vue, { PluginFunction, VNode, VueConstructor } from 'vue'
+import Vue, { VNode, VueConstructor } from 'vue'
 import { Store } from 'vuex'
 import BureauForm from './components/BureauForm'
 import { bureauModule, RootState } from './state'
@@ -26,26 +26,12 @@ declare global {
   }
 }
 
-export interface BureauPlugin {
-  install: PluginFunction<BureauPluginOptions>
-}
-
 export interface BureauPluginOptions {
   store: Store<RootState>
 }
 
-declare module 'vue/types/vue' {
-  interface VueConstructor<
-    V extends Vue = Vue,
-    Options = Record<string, any>
-  > {
-    version: string
-    options: Options
-  }
-}
-
-export const Bureau: BureauPlugin = {
-  install (vue: VueConstructor, args?: BureauPluginOptions): void { 
+class Bureau {
+  static install (vue: VueConstructor, args?: BureauPluginOptions): void { 
     const options = { 
       store: undefined,
       ...args 
@@ -64,3 +50,8 @@ export const Bureau: BureauPlugin = {
   }
 }
 
+export default Bureau
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(Bureau)
+}
