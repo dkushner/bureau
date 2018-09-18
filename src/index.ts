@@ -34,13 +34,7 @@ export interface BureauPluginOptions {
   store: Store<RootState>
 }
 
-export interface BureauObject extends Vue { }
-
 declare module 'vue/types/vue' {
-  export interface Vue {
-    $bureau: BureauObject
-  }
-
   interface VueConstructor<
     V extends Vue = Vue,
     Options = Record<string, any>
@@ -67,8 +61,6 @@ export const Bureau: BureauPlugin = {
     options.store.registerModule('bureau', bureauModule, {
       preserveState: Boolean(options.store.state.bureau)
     })
-
-    vue.prototype.$bureau = { }
   }
 }
 
