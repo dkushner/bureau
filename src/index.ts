@@ -28,7 +28,7 @@ declare global {
   }
 }
 
-export interface Bureau {
+export interface BureauPlugin {
   install: PluginFunction<BureauPluginOptions>
   version: string
 }
@@ -55,7 +55,7 @@ declare module 'vue/types/vue' {
   }
 }
 
-const Bureau: Bureau = {
+export const Bureau: BureauPlugin = {
   install (vue: VueConstructor, args?: BureauPluginOptions): void { 
     const options = { 
       store: undefined,
