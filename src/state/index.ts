@@ -40,7 +40,7 @@ export interface BureauState {
 }
 
 export const state: BureauState = {
-  forms: {}
+  forms: {},
 }
 
 const namespaced = true
