@@ -1,6 +1,6 @@
 {
   "name": "vue-bureau",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Form management plugin for Vue and Vuex.",
   "main": "lib/commonjs/index.js",
   "module": "lib/es6/index.js",
